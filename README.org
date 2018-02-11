@@ -10,6 +10,8 @@ Org Mode multilingual preprocessor.
 
 ** Property
 - :LANG_<ISO Code>:
+
+*** Example
 #+BEGIN_EXAMPLE
 :PROPERTIES:
 :LANG_EN: Section Name
@@ -32,6 +34,7 @@ Org Mode multilingual preprocessor.
 ** Block
 - #+BEGIN_LANG <ISO Code>
 
+*** Example
 #+BEGIN_EXAMPLE
 #+BEGIN_LANG EN
 Contents
@@ -65,6 +68,8 @@ contenido
 
 ** Inline
 - #+LANG_<ISO Code>:
+
+*** Example
 #+BEGIN_EXAMPLE
 #+LANG_EN: Hello World!
 #+LANG_ES: Hello Mundo!
@@ -84,6 +89,8 @@ contenido
 
 ** Quoting
 - @@LANG_<ISO Code>: @@
+
+*** Example
 #+BEGIN_EXAMPLE
 Hello @@LANG_EN:World@@!
 Hello @@LANG_ES:Mundo@@!
