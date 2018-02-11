@@ -18,7 +18,7 @@ Org Mode multilingual preprocessor.
 :LANG_ES: Nombre de la sección
 :LANG_KO: 섹션 이름
 :LANG_ZH: 部分名称
-:LANG_JP: セクション名
+:LANG_JA: セクション名
 :END:
 #+END_EXAMPLE
 
@@ -52,7 +52,7 @@ contenido
 内容
 #+END_LANG
 
-#+BEGIN_LANG JP
+#+BEGIN_LANG JA
 内容
 #+END_LANG
 #+END_EXAMPLE
@@ -75,7 +75,7 @@ contenido
 #+LANG_ES: Hello Mundo!
 #+LANG_KO: 안녕 World!
 #+LANG_ZH: 你好 World!
-#+LANG_JP: こんにちは World!
+#+LANG_JA: こんにちは World!
 #+END_EXAMPLE
 
 |         | Results        |
