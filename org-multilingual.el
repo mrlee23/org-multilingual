@@ -57,7 +57,6 @@
   (replace-regexp-in-string
    org-multilingual-block-regexp
    (lambda (str)
-	 (message "HI")
 	 (org-multilingual-replacer (match-string 1 str) lang (concat "\n" (match-string 2 str))))
    str t))
 
@@ -77,6 +76,17 @@
 	 (org-multilingual-replacer (match-string 1 str) lang (match-string 2 str)))
    str t))
 
+(defun org-multilingual (data lang)
+  "Preprocess DATA match LANG."
+  (setq data (org-multilingual-replace-block data lang)
+		data (org-multilingual-replace-inline data lang)
+		data (org-multilingual-replace-quote data lang))
+  data
+  )
+
+(defun org-multilingual-publish (plist filename pub-dir)
+  (with-temp-buffer)
+  )
 (provide 'org-multilingual)
 
 ;;; org-multilingual.el ends here
