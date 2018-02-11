@@ -21,14 +21,19 @@ git clone https://github.com/mrlee23/org-multilingual.git
 (org-multilingual "Hello @@LANG_EN:World@@@@LANG_ES:Mundo@@!" 'es) ;; "Hello Mundo!"
 #+END_SRC
 
-
 * Syntax
 
 ** Property
+Replace section name with value of "LANG_XX" property.
+The property value will be trim left, right spaces.
+
+Remaining not "LANG_XX" properties is remaning.
+
 - :LANG_<ISO Code>:
 
 *** Example
 #+BEGIN_EXAMPLE
+*** This is test
 :PROPERTIES:
 :LANG_EN: Section Name
 :LANG_ES: Nombre de la sección
