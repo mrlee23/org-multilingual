@@ -1,4 +1,4 @@
-#+TITLE: org-multilingual
+#+TITLE: org-multilingual [[https://travis-ci.org/mrlee23/org-multilingual.svg?branch=master]]
 #+AUTHOR: Dongsoo Lee
 #+EMAIL: dongsoolee8@gmail.com
 #+DATE: 2018-02-11
