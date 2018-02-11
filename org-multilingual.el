@@ -23,7 +23,7 @@
   "Lang code regex with group.")
 (defvar org-multilingual-property-regexp "\n[ \t]*:PROPERTIES:\\(.*\\)\n[ \t]*:END:"
   "Property regex.")
-(defvar org-multilingual-block-regexp (format "\n[ \t]*#\\+BEGIN_LANG [ \t]*%s[^\n]*\n\\(.*\\)\n[ \t]*#\\+END_LANG" org-multilingual-lang-code-regex)
+(defvar org-multilingual-block-regexp (format "\n?[ \t]*#\\+BEGIN_LANG [ \t]*%s[^\n]*\n\\(.*\\)\n[ \t]*#\\+END_LANG" org-multilingual-lang-code-regex)
   "Block regex with lang code group and contents.")
 (defvar org-multilingual-inline-regexp (format "^[ \t]*#\\+LANG_%s[ \t]*:\\([^\n]*\\)\n?" org-multilingual-lang-code-regex)
   "Inline regex with lang code group and contents.")

@@ -3,25 +3,13 @@ language: generic
 services:
   - docker
 before_install:
-  - >
-    DOCKER_RUN () {
-    docker run --rm
-    --volume "$CURRENT_DIR:/mnt/"
-    --name dev
-    dongsoolee/ubuntu-development /bin/bash -c "cd /mnt;$1";
-    }
-
+  - 'DOCKER_RUN () { docker run --rm --volume "$CURRENT_DIR:/mnt/" --name dev dongsoolee/ubuntu-development
+  /bin/bash -c "cd /mnt;$1"; }'
 script:
   - DOCKER_RUN "emacs -Q --batch -l ert -l test.el -f ert-run-tests-batch-and-exit"
-
 env:
-  global:
-    secure: RZ9gC5b6LDlTyWN0mmdUFWo0nzV8TuXw7Vr4t0pXsXcuQMQwlvpvif/FRgWmtpzeKFamXnyZv9KR9WidM6FCfq2v6nX2Dix4D03XU1hWRt2HX3p4Ba9wc/qoYZM+ZkMGuhG1Fy7C4LpNIykg+D3Cv0p6He8lVjl5ZpxsAR7+DzHZqclwhLE6NU8y4X4ApwzWI54dP4LCtiSChI6HqF6l5DWt1uBir6ubuzWyxO2FtjCEJxW1lzEHM7RTWob4rqBOzgIblxco5XkEEyNmKtt0Kva+G9cMFE/w02KDwA2UXPoV+hBDyhimNf35ZBZZrbv3N4E2Y59e+UfUrfmntw2N+3ryunBbriUAnlPFuzLElWnXerPczLAl2urz0X9fczFr9TFIifKlpUzWdfj9kzCglky9HBpRjaExrwA3xWdyRcuQLe3mI+mLpJoT6adeKi91zKK9ErDkIC4ZvRLlapTEzyQQdKoI1XFfiEk7M3KC3hmhte+X9O51ob2CTTQAiWonac564+N8kwpHiK+e9Kqgu/l0J767mxqPDZVEkAuxbElLG+lNB6car3OLCpfUvnAAUlxGVViJJsf5T+w3WVSvH/7it/SAKMjd8S9gqnioLfkSmgfxOIcTbQ6uJpV6N5JJopVAx68W6Ev92wSkxCTCod0ElQ2ZBHR5GFHSvxqM8kg=
   matrix:
-    - EMACS_DEPS_DIR=.emacs-dependencies;
-      CURRENT_DIR=`pwd`;
-      GIT_USER_NAME="mrlee23";
-      GIT_USER_EMAIL="mrlee_23@naver.com"
+  - CURRENT_DIR=`pwd`
 notifications:
   slack:
-    secure: BOMw+s/NtoKMEohoig+jbDCN2jA+DeiWHdLWPbS2/09OCSUb2d5vCF6DcAchiV/7L87ou3A7pQw0dBvyLmiaIUvQ1Y2NGPBV4ol+1wUmlsA3EG+yLWAeH3jAGq7m3DCLguwSsVVhVixUoIIdxYpdcNM9Hd13kD/Yihk41KpJbFYm7avKVkln0EypmQbL9WwgGsZy8R7hyGgv6rF0/stIZntXb7nrGSQuqdDR3/c6O2C4dEgfm1RVXcFjMMN1CK6DIyyDbGB9+6+cbCAV4TJqVZCh4csMd1t7tVrBLe0/aO9wpUGdz3LvRFMNCqbvafKYLB71rk02G8WNq2tOdsMPuGIo8DgtHJjjn+BnIUYMm7sZevftz11ygP/IJexpBBHk8VYsrfsors9v3UTsMM6l9SBxBTNbEU8cdMbZummHY70SAnPbZO85unZGTKqwlSyGERfvClEig4Dj41b+8vGkDRBVnBLOPF/FFq3OEnPMiB8yn5V+oW8Ynac9uJPSD47IOqRi1Gb+mZMJ9B6Xu/XAtcEPiIi0osSPYJKrxTxL+IMwPeGHgN3SRdrjgOxh/qW140HquNgY97IhjyQwJHJhOYJTyw9tGXqJstO2VSAGzEmNpaO44rTmO3j9qNyumBnhAfLeNuWdyYsgwoKki9Ijvo980kSnOyUXqbGH6dTJNTs=
+    secure: hmjCAGavGBsNRlm59+6JifTprSh7LcD1/iTmyN0KJhTtHSrKOLVqObicHQHRdd10jH9emCNQ4jDmYizGp4NIxa8vqpJSdffM8ctpcRbFJ2xU+2LWtcM1lNgA0dl2bLDza1UlZgziAkSsSsLhl3FwlNpd6RC3BVdxjr9AvyAxTgkmQMO9oYTKL8Jmn3vDC2IJp89FjpSV+zBdkocyJXFYahKAt1hjXVEieyT0ciYu0boOPtxmQi5KGxIoz/tsghVSQXBwhh7Lmulx0lQdvSqeULKWi1TepIJGtR0dh7RPtXXLXJbJqOr78F+b7bjSzeFo5SjXw0pwomQ3mzdBjm4SCweXxqywdB0zFaFSz6AS4oeOz+P7IENnrs7RGkyh4f2PgeFe1mdBqYRbaa5mJKhXCvwR8sIoyP6ImDxYAyFblqt8WLWzQ25/idr07Qs/ZR1QTFmn2ZnkpJP3Y9M8mExwShulnW/Fvp/d64AgFvTCQs6Y6q/gHwZJizopPV9JXBmNp2Kk4a6NarQ/ZFj0loI4qDRDs0MqCfY5M08YgD6BnAh6dM5adxzz2MqmySkm6yC81bcQOT36n932aDZfjNVV/1+DdWb5l64rU8Yzi5RElMj1GNhgcUEx+vMqh9Nz/SJCvX3TcgMh+h2pzySIogRuzLbZm2p40EzO0LKjX3xR/7s=

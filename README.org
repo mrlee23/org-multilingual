@@ -96,7 +96,7 @@ Hello @@LANG_EN:World@@!
 Hello @@LANG_ES:Mundo@@!
 @@LANG_KO:안녕@@ World!
 你好 @@LANG_ZH:World@@!
-こんにちは @@LANG_ZH:World@@!
+こんにちは @@LANG_JA:World@@!
 #+END_EXAMPLE
 
 |         | Results        |
