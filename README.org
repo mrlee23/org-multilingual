@@ -6,6 +6,22 @@
 * Introduction
 Org Mode multilingual preprocessor.
 
+* How to use
+1. Download source code
+  #+BEGIN_SRC sh
+git clone https://github.com/mrlee23/org-multilingual.git
+  #+END_SRC
+2. Add to =load-path=
+  #+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "./org-multilingual")
+(require 'org-multilingual)
+  #+END_SRC
+3. Execute
+#+BEGIN_SRC emacs-lisp
+(org-multilingual "Hello @@LANG_EN:World@@@@LANG_ES:Mundo@@!" 'es) ;; "Hello Mundo!"
+#+END_SRC
+
+
 * Syntax
 
 ** Property
