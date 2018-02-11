@@ -1,0 +1,102 @@
+#+TITLE: org-multilingual
+#+AUTHOR: Dongsoo Lee
+#+EMAIL: dongsoolee8@gmail.com
+#+DATE: 2018-02-11
+
+* Introduction
+Org Mode multilingual preprocessor.
+
+* Syntax
+
+** Property
+- :LANG_<ISO Code>:
+#+BEGIN_EXAMPLE
+:PROPERTIES:
+:LANG_EN: Section Name
+:LANG_ES: Nombre de la sección
+:LANG_KO: 섹션 이름
+:LANG_ZH: 部分名称
+:LANG_JP: セクション名
+:END:
+#+END_EXAMPLE
+
+|         | Results      |
+|---------+----------------------|
+| English | Section Name         |
+| Español | Nombre de la sección |
+| 한국어  | 섹션 이름            |
+| 中文    | 部分名称             |
+| 日本語  | セクション名         |
+| Others  | Section              |
+
+** Block
+- #+BEGIN_LANG <ISO Code>
+
+#+BEGIN_EXAMPLE
+#+BEGIN_LANG EN
+Contents
+#+END_LANG
+
+#+BEGIN_LANG ES
+contenido
+#+END_LANG
+
+#+BEGIN_LANG KO
+내용
+#+END_LANG
+
+#+BEGIN_LANG ZH
+内容
+#+END_LANG
+
+#+BEGIN_LANG JP
+内容
+#+END_LANG
+#+END_EXAMPLE
+
+|         | Results |
+|---------+-----------|
+| English | Contents  |
+| Español | contenido |
+| 한국어  | 내용      |
+| 中文    | 内容      |
+| 日本語  | 内容      |
+| Others  |           |
+
+** Inline
+- #+LANG_<ISO Code>:
+#+BEGIN_EXAMPLE
+#+LANG_EN: Hello World!
+#+LANG_ES: Hello Mundo!
+#+LANG_KO: 안녕 World!
+#+LANG_ZH: 你好 World!
+#+LANG_JP: こんにちは World!
+#+END_EXAMPLE
+
+|         | Results        |
+|---------+----------------|
+| English | Hello World!   |
+| Español | Hello Mundo!   |
+| 한국어  | 안녕 World!    |
+| 中文    | 你好 World!    |
+| 日本語  | こんにちは World! |
+| Others  |                |
+
+** Quoting
+- @@LANG_<ISO Code>: @@
+#+BEGIN_EXAMPLE
+Hello @@LANG_EN:World@@!
+Hello @@LANG_ES:Mundo@@!
+@@LANG_KO:안녕@@ World!
+你好 @@LANG_ZH:World@@!
+こんにちは @@LANG_ZH:World@@!
+#+END_EXAMPLE
+
+|         | Results        |
+|---------+----------------|
+| English | Hello World!   |
+| Español | Hello Mundo!   |
+| 한국어  | 안녕 World!    |
+| 中文    | 你好 World!    |
+| 日本語  | こんにちは World! |
+| Others  |                |
