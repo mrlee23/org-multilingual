@@ -18,9 +18,33 @@ git clone https://github.com/mrlee23/org-multilingual.git
   #+END_SRC
 3. Execute
 #+BEGIN_SRC emacs-lisp
-(org-multilingual "Hello @@LANG_EN:World@@@@LANG_ES:Mundo@@!" 'es) ;; "Hello Mundo!"
+(org-multilingual-replace "Hello @@LANG_EN:World@@@@LANG_ES:Mundo@@!" 'es) ;; "Hello Mundo!"
 #+END_SRC
 
+** with Publish
+#+BEGIN_SRC emacs-lisp
+  (defun org-my-publish-to-html (plist filename pub-dir)
+    (org-html-publish-to-html plist
+                              (org-multilingual-publish plist filename pub-dir)
+                              pub-dir))
+  (setq org-publish-project-alist
+          `(("Project Name"
+             :base-directory "BASE_DIR"
+             :base-extension "org"
+             :auto-index nil
+             :exclude: "EXCLUDE_DIR"
+             :index-filename nil
+             :index-title nil
+             :auto-sitemap nil
+             :publishing-directory "TARGET_DIR"
+             :publishing-function org-my-publish-to-html
+             :headline-levels 4
+             :recursive nil
+             :auto-preamble nil
+             )
+            ))
+
+#+END_SRC
 * Syntax
 
 ** Property
