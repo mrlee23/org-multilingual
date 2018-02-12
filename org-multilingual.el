@@ -153,7 +153,8 @@ PUB-DIR to save result file."
 		  (delete-region 1 (point-max))
 		  (insert data)
 		  (message "Save file to `%s'..." new-filename)
-		  (write-file new-filename)
+		  (with-temp-file new-filename
+			(insert new-filename))
 		  new-filename)
 		))))
 
