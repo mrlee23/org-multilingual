@@ -152,3 +152,7 @@ Hello @@LANG_ES:Mundo@@!
 | 中文    | 你好 World!    |
 | 日本語  | こんにちは World! |
 | Others  |                |
+
+* Options
+- :language
+- :override

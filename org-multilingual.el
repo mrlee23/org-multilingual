@@ -127,8 +127,9 @@ PLIST for detect language.
 FILENAME to preprocessing.
 PUB-DIR to save result file."
   (let (result
-		lang)
+		lang override)
 	(setq lang (plist-get plist :language))
+	(setq override (plist-get plist :override))
 	(unless (file-directory-p pub-dir)
 	  (make-directory pub-dir t))
 	(message "Start multilingual preprocessing in `%s'..." filename)
@@ -145,8 +146,9 @@ PUB-DIR to save result file."
 			 (message "Skiped to %s in `%s'..." lang filename)
 			 filename)
 		  (message "Preprocessing to %s in `%s'..." lang filename)
-		  (when (file-exists-p new-filename)
-			(setq new-filename (format "%s.%s.%s" (file-name-sans-extension new-filename) lang (file-name-extension new-filename))))
+		  (unless override
+			(when (file-exists-p new-filename)
+			  (setq new-filename (format "%s.%s.%s" (file-name-sans-extension new-filename) lang (file-name-extension new-filename)))))
 		  (setq data (org-multilingual-replace data lang))
 		  (delete-region 1 (point-max))
 		  (insert data)
