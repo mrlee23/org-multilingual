@@ -13,6 +13,17 @@
 :LANG_JA: 	セクション名
 :NAME: hey
 :END:
+")
+		(data2 "*** This is test
+  :PROPERTIES:
+  :CUSTOM_ID: hi
+  :LANG_EN: 	Section Name
+  :LANG_ES: 	Nombre de la sección
+  :LANG_KO: 	섹션 이름
+  :LANG_ZH: 	部分名称
+  :LANG_JA: 	セクション名
+  :NAME: hey
+  :END:
 "))
 	(should (equal (org-multilingual-replace-property data 'en) "*** Section Name
 :PROPERTIES:
@@ -49,6 +60,43 @@
 :CUSTOM_ID: hi
 :NAME: hey
 :END:
+"))
+	
+	(should (equal (org-multilingual-replace-property data2 'en) "*** Section Name
+  :PROPERTIES:
+  :CUSTOM_ID: hi
+  :NAME: hey
+  :END:
+"))
+	(should (equal (org-multilingual-replace-property data2 'es) "*** Nombre de la sección
+  :PROPERTIES:
+  :CUSTOM_ID: hi
+  :NAME: hey
+  :END:
+"))
+	(should (equal (org-multilingual-replace-property data2 'ko) "*** 섹션 이름
+  :PROPERTIES:
+  :CUSTOM_ID: hi
+  :NAME: hey
+  :END:
+"))
+	(should (equal (org-multilingual-replace-property data2 'zh) "*** 部分名称
+  :PROPERTIES:
+  :CUSTOM_ID: hi
+  :NAME: hey
+  :END:
+"))
+	(should (equal (org-multilingual-replace-property data2 'ja) "*** セクション名
+  :PROPERTIES:
+  :CUSTOM_ID: hi
+  :NAME: hey
+  :END:
+"))
+	(should (equal (org-multilingual-replace-property data2 'no) "*** This is test
+  :PROPERTIES:
+  :CUSTOM_ID: hi
+  :NAME: hey
+  :END:
 "))
 	))
 
@@ -167,6 +215,34 @@ Hello !
 こんにちは !"))
 	))
 
+(ert-deftest publish-test ()
+  (let ((filename "test.org")
+	  new-filename)
+	(setq new-filename (org-multilingual-publish '(:language ko) filename "ko"))
+	(should (equal new-filename (expand-file-name (file-name-nondirectory filename) "ko")))
+	(with-temp-buffer
+	  (insert-file-contents new-filename)
+	  (should (equal (buffer-substring-no-properties 1 (point-max)) "#+TITLE: HI
+#+AUTHOR: Dongsoo Lee
+#+LANGUAGE: ko
+
+* 섹션 이름
+  :PROPERTIES: 
+  :END:      
+
+* with Block
+내용
+
+* with Inline
+ 안녕 World!
+* with Quoting
+Hello !
+Hello !
+안녕 World!
+你好 !
+こんにちは !
+"))))
+  )
 (provide 'org-multilingual-test)
 
 ;;; org-multilingual-test.el ends here

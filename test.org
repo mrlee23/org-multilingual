@@ -1,0 +1,43 @@
+#+TITLE: HI
+#+AUTHOR: Dongsoo Lee
+#+LANGUAGE: ko
+
+* with Section
+  :PROPERTIES: 
+  :LANG_EN:  Section Name
+  :LANG_ES:  Nombre de la sección
+  :LANG_KO:  섹션 이름
+  :LANG_ZH:  部分名称
+  :LANG_JA:  セクション名
+  :END:      
+
+* with Block
+#+BEGIN_LANG EN
+Contents
+#+END_LANG
+#+BEGIN_LANG ES
+contenido
+#+END_LANG
+#+BEGIN_LANG KO
+내용
+#+END_LANG
+#+BEGIN_LANG ZH
+内容
+#+END_LANG
+#+BEGIN_LANG JA
+内容
+#+END_LANG
+
+* with Inline
+#+LANG_EN: Hello World!
+#+LANG_ES: Hello Mundo!
+#+LANG_KO: 안녕 World!
+#+LANG_ZH: 你好 World!
+#+LANG_JA: こんにちは World!
+
+* with Quoting
+Hello @@LANG_EN:World@@!
+Hello @@LANG_ES:Mundo@@!
+@@LANG_KO:안녕@@ World!
+你好 @@LANG_ZH:World@@!
+こんにちは @@LANG_JA:World@@!

@@ -23,9 +23,10 @@
   "Lang code regex with group.")
 (defvar org-multilingual-contents-multiline-regexp "\\(.*\\(?:\n.*\\)*?\\)"
   "Multiline regexp for contents.")
-(defvar org-multilingual-section-name-regexp "^\\(\\**\\) \\(.*\\)\n"
+(defvar org-multilingual-section-name-regexp "^\\(\\*+\\) \\(.*\\)\n"
   "Section name regexp.")
-(defvar org-multilingual-property-regexp (format "%s%s[ \t]*:PROPERTIES:\n%s*\n[ \t]*:END:" org-multilingual-section-name-regexp org-multilingual-contents-multiline-regexp org-multilingual-contents-multiline-regexp))
+(defvar org-multilingual-language-header-regexp (format "^[ \t]*#\\+LANGUAGE:[ \t]*%s[^\n]*" org-multilingual-lang-code-regexp))
+(defvar org-multilingual-property-regexp (format "%s%s[ \t]*:PROPERTIES:[ \t]*\n%s*\n[ \t]*:END:" org-multilingual-section-name-regexp org-multilingual-contents-multiline-regexp org-multilingual-contents-multiline-regexp))
 (defvar org-multilingual-property-regexp2 (format "\n[ \t]*:LANG_%s:\\([^\n]*\\)" org-multilingual-lang-code-regexp)
   "Property regex2.")
 (defvar org-multilingual-block-regexp (format "\n?[ \t]*#\\+BEGIN_LANG [ \t]*%s\n%s\n[ \t]*#\\+END_LANG" org-multilingual-lang-code-regexp org-multilingual-contents-multiline-regexp)
@@ -59,31 +60,31 @@
 
 (defun org-multilingual-replace-property (str lang)
   "Replace property type matched STR matched LANG."
-  (let (ret-str rep-str tmp-str)
+  (let (ret-str rep-str)
 	(setq ret-str
 		  (replace-regexp-in-string
 		   org-multilingual-property-regexp
 		   (lambda (str)
-			 (setq str
+			 (let (rep-str)
+			   (setq str
+					 (replace-regexp-in-string
+					  org-multilingual-property-regexp2
+					  (lambda (sub-str)
+						(let (tmp-str)
+						  (setq tmp-str (org-multilingual-replacer (match-string 1 sub-str) lang (match-string 2 sub-str)))
+						  (setq tmp-str (replace-regexp-in-string "^[ \t]*" "" (replace-regexp-in-string "[ \t]*$" "" tmp-str)))
+						  (unless (equal tmp-str "")
+							(setq rep-str tmp-str)))
+						"")
+					  str t))
+			   (if rep-str
 				   (replace-regexp-in-string
-					org-multilingual-property-regexp2
+					org-multilingual-section-name-regexp
 					(lambda (sub-str)
-					  (setq tmp-str (org-multilingual-replacer (match-string 1 sub-str) lang (match-string 2 sub-str)))
-					  (setq tmp-str (replace-regexp-in-string "^[ \t]*" ""
-									 (replace-regexp-in-string "[ \t]*$" "" tmp-str)))
-					  (unless (equal tmp-str "")
-						(setq rep-str tmp-str))
-					  "")
-					str t))
-			 (if rep-str
-				 (replace-regexp-in-string
-				  org-multilingual-section-name-regexp
-				  (lambda (sub-str)
-					(format "%s %s\n" (match-string 1 sub-str) rep-str)
-					)
-				  str t)
-			   str)
-			 )
+					  (format "%s %s\n" (match-string 1 sub-str) rep-str)
+					  )
+					str t)
+				 str)))
 		   str t))
 	))
 
@@ -125,8 +126,32 @@
 PLIST for detect language.
 FILENAME to preprocessing.
 PUB-DIR to save result file."
-  (with-temp-buffer)
-  )
+  (let (result
+		lang)
+	(setq lang (plist-get plist :language))
+	(unless (file-directory-p pub-dir)
+	  (make-directory pub-dir t))
+	(message "Start multilingual preprocessing in `%s'..." filename)
+	(with-temp-buffer
+	  filename
+	  (insert-file-contents filename)
+	  (let ((data (buffer-substring-no-properties 1 (point-max)))
+			(new-filename (expand-file-name (file-name-nondirectory filename) pub-dir)))
+		(when (and (not lang) (string-match org-multilingual-language-header-regexp data))
+		  (setq lang (match-string 1 data)))
+		(setq lang (org-multilingual-normalize-code lang))
+		(if (not (org-multilingual-exists-code lang))
+			(pron
+			 (message "Skiped to %s in `%s'..." lang filename)
+			 filename)
+		  (message "Preprocessing to %s in `%s'..." lang filename)
+		  (setq data (org-multilingual-replace data lang))
+		  (delete-region 1 (point-max))
+		  (insert data)
+		  (message "Save file to `%s'..." new-filename)
+		  (write-file new-filename)
+		  new-filename)
+		))))
 
 (provide 'org-multilingual)
 
