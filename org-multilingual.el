@@ -145,6 +145,8 @@ PUB-DIR to save result file."
 			 (message "Skiped to %s in `%s'..." lang filename)
 			 filename)
 		  (message "Preprocessing to %s in `%s'..." lang filename)
+		  (when (file-exists-p new-filename)
+			(setq new-filename (format "%s.%s.%s" (file-name-sans-extension new-filename) lang (file-name-extension new-filename))))
 		  (setq data (org-multilingual-replace data lang))
 		  (delete-region 1 (point-max))
 		  (insert data)

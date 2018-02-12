@@ -241,8 +241,12 @@ Hello !
 안녕 World!
 你好 !
 こんにちは !
-"))))
-  )
+"))
+	  (delete-file new-filename))
+	(setq new-filename (org-multilingual-publish '(:language ko) filename "./"))
+	(should (equal new-filename (format "%s.%s.%s" (file-name-sans-extension (expand-file-name filename)) "ko" (file-name-extension filename))))
+	(delete-file new-filename)
+  ))
 (provide 'org-multilingual-test)
 
 ;;; org-multilingual-test.el ends here
