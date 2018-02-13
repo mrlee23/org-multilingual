@@ -150,11 +150,9 @@ PUB-DIR to save result file."
 			(when (file-exists-p new-filename)
 			  (setq new-filename (format "%s.%s.%s" (file-name-sans-extension new-filename) lang (file-name-extension new-filename)))))
 		  (setq data (org-multilingual-replace data lang))
-		  (delete-region 1 (point-max))
-		  (insert data)
 		  (message "Save file to `%s'..." new-filename)
 		  (with-temp-file new-filename
-			(insert new-filename))
+			(insert data))
 		  new-filename)
 		))))
 
