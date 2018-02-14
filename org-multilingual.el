@@ -26,8 +26,8 @@
 (defvar org-multilingual-section-name-regexp "^\\(\\*+\\) \\(.*\\)\n"
   "Section name regexp.")
 (defvar org-multilingual-language-header-regexp (format "^[ \t]*#\\+LANGUAGE:[ \t]*%s[^\n]*" org-multilingual-lang-code-regexp))
-(defvar org-multilingual-property-regexp (format "%s%s[ \t]*:PROPERTIES:[ \t]*\n%s*\n[ \t]*:END:" org-multilingual-section-name-regexp org-multilingual-contents-multiline-regexp org-multilingual-contents-multiline-regexp))
-(defvar org-multilingual-property-regexp2 (format "\n[ \t]*:LANG_%s:\\([^\n]*\\)" org-multilingual-lang-code-regexp)
+(defvar org-multilingual-property-regexp (format "%s[ \t]*:PROPERTIES:[ \t]*\n%s*\n[ \t]*:END:" org-multilingual-section-name-regexp org-multilingual-contents-multiline-regexp))
+(defvar org-multilingual-property-regexp2 (format "\\(\n[ \t]*\\):LANG_%s:\\([^\n]*\\)" org-multilingual-lang-code-regexp)
   "Property regex2.")
 (defvar org-multilingual-block-regexp (format "\n?[ \t]*#\\+BEGIN_LANG [ \t]*%s\n%s\n[ \t]*#\\+END_LANG" org-multilingual-lang-code-regexp org-multilingual-contents-multiline-regexp)
   "Block regex with lang code group and contents.")
@@ -70,12 +70,15 @@
 					 (replace-regexp-in-string
 					  org-multilingual-property-regexp2
 					  (lambda (sub-str)
-						(let (tmp-str)
-						  (setq tmp-str (org-multilingual-replacer (match-string 1 sub-str) lang (match-string 2 sub-str)))
+						(let (tmp-str spaces)
+						  (setq spaces (match-string 1 sub-str))
+						  (setq tmp-str (org-multilingual-replacer (match-string 2 sub-str) lang (match-string 3 sub-str)))
 						  (setq tmp-str (replace-regexp-in-string "^[ \t]*" "" (replace-regexp-in-string "[ \t]*$" "" tmp-str)))
-						  (unless (equal tmp-str "")
-							(setq rep-str tmp-str)))
-						"")
+						  (if (equal tmp-str "")
+							  ""
+							(setq rep-str tmp-str)
+							(format "%s:LANG: %s" spaces lang))
+						  ))
 					  str t))
 			   (if rep-str
 				   (replace-regexp-in-string
