@@ -28,30 +28,35 @@
 	(should (equal (org-multilingual-replace-property data 'en) "*** Section Name
 :PROPERTIES:
 :CUSTOM_ID: hi
+:LANG: en
 :NAME: hey
 :END:
 "))
 	(should (equal (org-multilingual-replace-property data 'es) "*** Nombre de la sección
 :PROPERTIES:
 :CUSTOM_ID: hi
+:LANG: es
 :NAME: hey
 :END:
 "))
 	(should (equal (org-multilingual-replace-property data 'ko) "*** 섹션 이름
 :PROPERTIES:
 :CUSTOM_ID: hi
+:LANG: ko
 :NAME: hey
 :END:
 "))
 	(should (equal (org-multilingual-replace-property data 'zh) "*** 部分名称
 :PROPERTIES:
 :CUSTOM_ID: hi
+:LANG: zh
 :NAME: hey
 :END:
 "))
 	(should (equal (org-multilingual-replace-property data 'ja) "*** セクション名
 :PROPERTIES:
 :CUSTOM_ID: hi
+:LANG: ja
 :NAME: hey
 :END:
 "))
@@ -65,30 +70,35 @@
 	(should (equal (org-multilingual-replace-property data2 'en) "*** Section Name
   :PROPERTIES:
   :CUSTOM_ID: hi
+  :LANG: en
   :NAME: hey
   :END:
 "))
 	(should (equal (org-multilingual-replace-property data2 'es) "*** Nombre de la sección
   :PROPERTIES:
   :CUSTOM_ID: hi
+  :LANG: es
   :NAME: hey
   :END:
 "))
 	(should (equal (org-multilingual-replace-property data2 'ko) "*** 섹션 이름
   :PROPERTIES:
   :CUSTOM_ID: hi
+  :LANG: ko
   :NAME: hey
   :END:
 "))
 	(should (equal (org-multilingual-replace-property data2 'zh) "*** 部分名称
   :PROPERTIES:
   :CUSTOM_ID: hi
+  :LANG: zh
   :NAME: hey
   :END:
 "))
 	(should (equal (org-multilingual-replace-property data2 'ja) "*** セクション名
   :PROPERTIES:
   :CUSTOM_ID: hi
+  :LANG: ja
   :NAME: hey
   :END:
 "))
@@ -228,6 +238,7 @@ Hello !
 
 * 섹션 이름
   :PROPERTIES: 
+  :LANG: ko
   :END:      
 
 * with Block
