@@ -104,7 +104,8 @@
   (replace-regexp-in-string
    org-multilingual-inline-regexp
    (lambda (str)
-	 (org-multilingual-replacer (match-string 1 str) lang (match-string 2 str)))
+	 (org-multilingual-replacer (match-string 1 str) lang (concat (match-string 2 str)
+																  (if (stringp (match-string 2 str)) "\n" ""))))
    str t))
 
 (defun org-multilingual-replace-quote (str lang)

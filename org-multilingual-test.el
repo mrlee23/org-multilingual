@@ -179,11 +179,11 @@ contenido
 #+LANG_KO: 안녕 World!
 #+LANG_ZH: 你好 World!
 #+LANG_JA: こんにちは World!"))
-	(should (equal (org-multilingual-replace-inline data 'en) " Hello World!"))
-	(should (equal (org-multilingual-replace-inline data 'es) " Hello Mundo!"))
-	(should (equal (org-multilingual-replace-inline data 'ko) " 안녕 World!"))
-	(should (equal (org-multilingual-replace-inline data 'zh) " 你好 World!"))
-	(should (equal (org-multilingual-replace-inline data 'ja) " こんにちは World!"))
+	(should (equal (org-multilingual-replace-inline data 'en) " Hello World!\n"))
+	(should (equal (org-multilingual-replace-inline data 'es) " Hello Mundo!\n"))
+	(should (equal (org-multilingual-replace-inline data 'ko) " 안녕 World!\n"))
+	(should (equal (org-multilingual-replace-inline data 'zh) " 你好 World!\n"))
+	(should (equal (org-multilingual-replace-inline data 'ja) " こんにちは World!\n"))
 	(should (equal (org-multilingual-replace-inline data 'no) ""))
 	))
 
@@ -246,6 +246,7 @@ Hello !
 
 * with Inline
  안녕 World!
+
 * with Quoting
 Hello !
 Hello !
