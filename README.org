@@ -111,6 +111,25 @@ contenido
 | 日本語  | 内容      |
 | Others  |           |
 
+*** Multiple languages
+#+BEGIN_EXAMPLE
+#+BEGIN_LANG EN ES
+Contents
+#+END_LANG
+#+BEGIN_LANG KO ZH JA
+内容
+#+END_LANG
+#+END_EXAMPLE
+
+|         | Results |
+|---------+-----------|
+| English | Contents  |
+| Español | Contents |
+| 한국어  | 内容      |
+| 中文    | 内容      |
+| 日本語  | 内容      |
+| Others  |           |
+
 ** Inline
 - #+LANG_<ISO Code>:
 

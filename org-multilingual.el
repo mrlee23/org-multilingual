@@ -29,7 +29,7 @@
 (defvar org-multilingual-property-regexp (format "%s[ \t]*:PROPERTIES:[ \t]*\n%s*\n[ \t]*:END:" org-multilingual-section-name-regexp org-multilingual-contents-multiline-regexp))
 (defvar org-multilingual-property-regexp2 (format "\\(\n[ \t]*\\):LANG_%s:\\([^\n]*\\)" org-multilingual-lang-code-regexp)
   "Property regex2.")
-(defvar org-multilingual-block-regexp (format "\n?[ \t]*#\\+BEGIN_LANG [ \t]*%s\n%s\n[ \t]*#\\+END_LANG" org-multilingual-lang-code-regexp org-multilingual-contents-multiline-regexp)
+(defvar org-multilingual-block-regexp (format "\n?[ \t]*#\\+BEGIN_LANG [ \t]*\\([^\n]*\\)\n%s\n[ \t]*#\\+END_LANG" org-multilingual-contents-multiline-regexp)
   "Block regex with lang code group and contents.")
 (defvar org-multilingual-inline-regexp (format "^[ \t]*#\\+LANG_%s[ \t]*:\\([^\n]*\\)\n?" org-multilingual-lang-code-regexp)
   "Inline regex with lang code group and contents.")
@@ -50,13 +50,43 @@
 	(setq code (org-multilingual-normalize-code code)))
   (member code org-multilingual-lang-codes))
 
+(defun org-multilingual-split-lang (langs)
+  "Split LANGS.
+This function is alternative of `split-string' for avoiding regexp confliction."
+  (let ((data '()) cache)
+	(mapcar
+	 (lambda (char)
+	   (if (or (eq 32 char) ;; space
+			   (eq 9 char)) ;; tab
+		   (progn
+			 (when (> (length cache) 0)
+			   (push cache data))
+			 (setq cache nil))
+		 (progn
+		   (setq cache (concat cache (format "%c" char)))
+		   nil)))
+			(concat langs " "))
+	(reverse data)))
+
 (defun org-multilingual-replacer (source-lang target-lang contents)
   "If SOURCE-LANG and TARGET-LANG are equal, return CONTENTS or empty string."
-  (unless (org-multilingual-exists-code source-lang)
-	(error "This LANG('%s') is not involved in language codes." source-lang))
-  (if (eq (org-multilingual-normalize-code source-lang)
-		  (org-multilingual-normalize-code target-lang))
-	  contents ""))
+  (when (symbolp source-lang)
+	(setq source-lang (symbol-name source-lang)))
+  (setq source-lang (org-multilingual-split-lang source-lang))
+
+  (mapcar
+   '(lambda (lang)
+	  (unless (org-multilingual-exists-code lang)
+		(error "The source LANG('%s') is not involved in language codes." lang)))
+   source-lang)
+  (setq source-lang (mapcar 'org-multilingual-normalize-code source-lang))
+  
+  (unless (org-multilingual-exists-code target-lang)
+	(error "The target LANG('%s') is not involved in language codes." target-lang))
+  (setq target-lang (org-multilingual-normalize-code target-lang))
+
+  (if (member target-lang source-lang)
+		  contents ""))
 
 (defun org-multilingual-replace-property (str lang)
   "Replace property type matched STR matched LANG."

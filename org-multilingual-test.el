@@ -225,7 +225,77 @@ Hello !
 こんにちは !"))
 	))
 
-(ert-deftest publish-test ()
+(ert-deftest publish-test-es ()
+  (let ((filename "test.org")
+	  new-filename)
+	(setq new-filename (org-multilingual-publish '(:language es) filename "es"))
+	(should (equal new-filename (expand-file-name (file-name-nondirectory filename) "es")))
+	(with-temp-buffer
+	  (insert-file-contents new-filename)
+	  (should (equal (buffer-substring-no-properties 1 (point-max)) "#+TITLE: HI
+#+AUTHOR: Dongsoo Lee
+
+* Nombre de la sección
+  :PROPERTIES: 
+  :LANG: es
+  :END:      
+
+* with Block
+contenido
+Contents
+
+* with Inline
+ Hello Mundo!
+
+* with Quoting
+Hello !
+Hello Mundo!
+ World!
+你好 !
+こんにちは !
+"))
+	  (delete-file new-filename))
+	(setq new-filename (org-multilingual-publish '(:language es) filename "./"))
+	(should (equal new-filename (format "%s.%s.%s" (file-name-sans-extension (expand-file-name filename)) "es" (file-name-extension filename))))
+	(delete-file new-filename)
+	))
+
+(ert-deftest publish-test-en ()
+  (let ((filename "test.org")
+	  new-filename)
+	(setq new-filename (org-multilingual-publish '(:language en) filename "en"))
+	(should (equal new-filename (expand-file-name (file-name-nondirectory filename) "en")))
+	(with-temp-buffer
+	  (insert-file-contents new-filename)
+	  (should (equal (buffer-substring-no-properties 1 (point-max)) "#+TITLE: HI
+#+AUTHOR: Dongsoo Lee
+
+* Section Name
+  :PROPERTIES: 
+  :LANG: en
+  :END:      
+
+* with Block
+Contents
+Contents
+
+* with Inline
+ Hello World!
+
+* with Quoting
+Hello World!
+Hello !
+ World!
+你好 !
+こんにちは !
+"))
+	  (delete-file new-filename))
+	(setq new-filename (org-multilingual-publish '(:language en) filename "./"))
+	(should (equal new-filename (format "%s.%s.%s" (file-name-sans-extension (expand-file-name filename)) "en" (file-name-extension filename))))
+	(delete-file new-filename)
+	))
+
+(ert-deftest publish-test-ko ()
   (let ((filename "test.org")
 	  new-filename)
 	(setq new-filename (org-multilingual-publish '(:language ko) filename "ko"))
@@ -234,7 +304,6 @@ Hello !
 	  (insert-file-contents new-filename)
 	  (should (equal (buffer-substring-no-properties 1 (point-max)) "#+TITLE: HI
 #+AUTHOR: Dongsoo Lee
-#+LANGUAGE: ko
 
 * 섹션 이름
   :PROPERTIES: 
@@ -243,6 +312,7 @@ Hello !
 
 * with Block
 내용
+内容
 
 * with Inline
  안녕 World!
@@ -258,7 +328,7 @@ Hello !
 	(setq new-filename (org-multilingual-publish '(:language ko) filename "./"))
 	(should (equal new-filename (format "%s.%s.%s" (file-name-sans-extension (expand-file-name filename)) "ko" (file-name-extension filename))))
 	(delete-file new-filename)
-  ))
+	))
 (provide 'org-multilingual-test)
 
 ;;; org-multilingual-test.el ends here

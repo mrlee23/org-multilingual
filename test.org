@@ -1,6 +1,5 @@
 #+TITLE: HI
 #+AUTHOR: Dongsoo Lee
-#+LANGUAGE: ko
 
 * with Section
   :PROPERTIES: 
@@ -25,6 +24,12 @@ contenido
 内容
 #+END_LANG
 #+BEGIN_LANG JA
+内容
+#+END_LANG
+#+BEGIN_LANG EN ES
+Contents
+#+END_LANG
+#+BEGIN_LANG KO ZH JA
 内容
 #+END_LANG
 
